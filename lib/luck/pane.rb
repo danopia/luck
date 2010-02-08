@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class Pane
   attr_accessor :display, :x1, :y1, :x2, :y2, :title, :controls
   
@@ -73,6 +72,5 @@ class Pane
     end
     print @display.color('0')
   end
-end
 end
 end

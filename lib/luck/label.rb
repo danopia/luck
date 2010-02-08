@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class Label < Control
   attr_accessor :alignment, :text
   
@@ -43,6 +42,5 @@ class Label < Control
       end
     end
   end
-end
 end
 end

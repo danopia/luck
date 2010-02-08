@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class Display
   attr_accessor :width, :height, :client, :panes, :buffer, :dirty, :active_control
   
@@ -157,6 +156,5 @@ class Display
     print "\e[2J\e[H" # clear all and go home
     self.cursor = true # show the mouse
   end
-end
 end
 end

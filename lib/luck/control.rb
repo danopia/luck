@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class Control
   attr_accessor :pane, :display, :x1, :y1, :x2, :y2
   
@@ -32,6 +31,5 @@ class Control
   def height
     y2 - y1
   end
-end
 end
 end

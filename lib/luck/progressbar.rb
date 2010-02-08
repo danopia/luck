@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class ProgressBar < Control
   attr_accessor :maximum, :value, :precap, :bar, :arrow, :blank, :postcap
   
@@ -50,6 +49,5 @@ class DoubleProgressBar < ProgressBar
     super
     @display.place y1, x1, @precap + (@bar2 * (percentage2 * (width - @precap.size - @postcap.size)) + @arrow2)
   end
-end
 end
 end

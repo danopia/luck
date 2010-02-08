@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class TextBox < Label
   attr_accessor :multiline, :handler, :label
   
@@ -43,6 +42,5 @@ class TextBox < Label
     end
     redraw
   end
-end
 end
 end

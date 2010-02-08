@@ -1,5 +1,4 @@
-module Remora
-module UI
+module Luck
 class ListBox < Control
   attr_accessor :data, :numbering, :hanging_indent
   
@@ -30,6 +29,5 @@ class ListBox < Control
       break if row >= y2
     end
   end
-end
 end
 end
