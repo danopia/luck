@@ -163,16 +163,12 @@ class Display
   rescue Errno::EAGAIN
   rescue EOFError
   end
-  
-  ######################################
-  # this is all copied from cashreg :P #
-  ######################################
 
   TIOCGWINSZ = 0x5413
   TCGETS = 0x5401
   TCSETS = 0x5402
-  ECHO   = 8 # 0000010
-  ICANON = 2 # 0000002
+  ECHO   = 8
+  ICANON = 2
 
   # Gets the terminal size.
   #
