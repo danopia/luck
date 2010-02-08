@@ -2,7 +2,7 @@ module Luck
 class Display
   attr_accessor :width, :height, :panes, :buffer, :dirty, :active_control
   
-  def initialize
+  def initialize &blck
     @panes = {}
     @dirty = true
     prepare_modes
@@ -10,6 +10,8 @@ class Display
     size = terminal_size
     @width = size[1]
     @height = size[0]
+    
+    instance_eval &blck if blck
   end
   
   def pane name, *args, &blck
