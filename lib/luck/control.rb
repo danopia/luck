@@ -3,7 +3,18 @@ module Luck
 #
 # If you actually add an instance of Control to a Pane, it'll just crash :D
 class Control
-  attr_accessor :pane, :display, :x1, :y1, :x2, :y2
+  # The parent of the control. Used to position the control.
+  # @return [Pane]
+  attr_reader :pane
+  
+  # The display that the parent is in. Used for rendering onto.
+  # @return [Display]
+  attr_reader :display
+  
+  # Sets the control's boundaries. Negative numbers are relative to the
+  # parent's bottom boundary.
+  # @return [Number]
+  attr_writer :x1, :y1, :x2, :y2
   
   # Create a new Control.
   #
@@ -20,12 +31,19 @@ class Control
   # @yield The optional block is executed in the Control instance,
   #   allowing for a limited DSL syntax.
   def initialize pane, x1, y1, x2, y2, &blck
-    @pane = pane
-    @display = pane.display
+    self.pane = pane
+    
     @x1, @y1 = x1, y1
     @x2, @y2 = x2, y2
     
     instance_eval &blck if blck
+  end
+  
+  # Changes the parent of the control.
+  # @param [Pane] pane The new parent.
+  def pane=(pane)
+    @pane = pane
+    @display = pane.display
   end
   
   # Calculates the control's absolute left boundary on the display.
