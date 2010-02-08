@@ -31,7 +31,6 @@ class Display
   def initialize &blck
     @panes = {}
     @dirty = true
-    prepare_modes
     
     size = terminal_size
     @width = size[1]
@@ -149,6 +148,21 @@ class Display
     print "\e[u"
     
     $stdout.flush
+  end
+  
+  # Run Luck until it errors or is stopped via Ctrl-C.
+  def run
+    trap 'INT' do
+      undo_modes
+    end
+
+    prepare_modes
+    begin
+      handle while sleep 0.01
+    rescue => ex
+      undo_modes
+      puts ex.class, ex.message, ex.backtrace
+    end
   end
   
   # Handle standard input.
