@@ -1,9 +1,12 @@
 Luck = Module.new
 
-require 'luck/display'
-require 'luck/pane'
+require 'luck/alert'
+require 'luck/ansi'
+require 'luck/button'
 require 'luck/control'
-require 'luck/listbox'
-require 'luck/progressbar'
+require 'luck/display'
 require 'luck/label'
+require 'luck/listbox'
+require 'luck/pane'
+require 'luck/progressbar'
 require 'luck/textbox'

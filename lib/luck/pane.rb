@@ -1,14 +1,43 @@
 module Luck
 class Pane
-  attr_accessor :display, :x1, :y1, :x2, :y2, :title, :controls
+  attr_accessor :display, :x1, :y1, :x2, :y2, :title, :controls, :handler, :dirty, :visible
   
   def initialize display, x1, y1, x2, y2, title, controls={}, &blck
     @display = display
     @x1, @y1 = x1, y1
     @x2, @y2 = x2, y2
     @title, @controls = title, controls
+    @dirty = false
+    @visible = true
     
     instance_eval &blck if blck
+  end
+  
+  def [] control
+    @controls[control]
+  end
+  
+  alias dirty? dirty
+  def dirty!
+    @dirty = true
+  end
+  
+  alias visible? visible
+  def show!; @visible = true; end
+  def hide!; @visible = false; end
+  
+  def yank_values
+    vals = {}
+    @controls.each_pair do |key, control|
+      next unless control.respond_to? :value
+      vals[key] = control.value
+      control.value = ''
+    end
+    vals
+  end
+  
+  def on_submit &blck
+    @handler = blck
   end
   
   def control name, type, *args, &blck
@@ -39,6 +68,7 @@ class Pane
   def redraw
     draw_frame
     draw_contents
+    draw_title
   end
   
   def draw_contents
@@ -47,29 +77,55 @@ class Pane
     end
   end
   
-  def topbar
-    title = " * #{@title} * "
-    left = (((width - 1).to_f / 2) - (title.size.to_f / 2)).to_i
-
-    if title.size >= width
-      "#{@display.color '1;34'} #{@title[0, width - 3].center(width - 3)} #{@display.color '0;2'}"
-    else
-      title_colored = "#{@display.color '1;34'}#{title}#{@display.color '0;2'}"
-      ('-' * left) + title_colored + ('-' * (width - 1 - title.size - left))
+  def control_at x, y
+    @controls.values.each do |control|
+      return control if (control.x1..control.x2).include?(x) && (control.y1..control.y2).include?(y)
+    end
+    nil
+  end
+  
+  def handle_click button, modifiers, x, y
+    control = control_at x, y
+    if control
+      if button == :left
+        control.focus! if control.respond_to? :handle_char
+        control.redraw
+      end
+      control.handle_click button, modifiers, x, y if control.respond_to?(:handle_click)
     end
   end
 
   def draw_frame
-    bottombar = '-' * (width - 1)
+    linebar = 'q' * (width - 1)
     fillerbar = ' ' * (width - 1)
 
+    @display.driver.linedrawing = true
     print @display.color('0;2')
-    @display.place y1, x1, "+#{topbar}+"
-    @display.place y2, x1, "+#{bottombar}+"
+    
+    @display.place y1, x1, "n#{linebar}n"
+    @display.place y2, x1, "n#{linebar}n"
+    #~ @display.place y1, x1, "l#{topbar}k"
+    #~ @display.place y2, x1, "m#{bottombar}j"
 
     (y1 + 1).upto y2 - 1 do |row|
-      @display.place row, x1, "|#{fillerbar}|"
+      @display.place row, x1, "x#{fillerbar}x"
     end
+    
+    @display.driver.linedrawing = false
+    print @display.color('0')
+  end
+
+  def draw_title
+    title = " * #{@title} * "
+    left = (((width - 1).to_f / 2) - (title.size.to_f / 2)).to_i
+
+    if title.size >= width
+      title = @title[0, width - 3]
+      left = 0
+    end
+    
+    print @display.color('1;34')
+    @display.place y1, x1 + 1 + left, title
     print @display.color('0')
   end
 end
