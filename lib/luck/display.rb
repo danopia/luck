@@ -87,7 +87,7 @@ class Display
   end
   
   def cycle_controls
-    index = @active_pane.controls.keys.index @active_pane.controls.key(@active_control)
+    index = @active_pane.controls.keys.index @active_pane.controls.index(@active_control)
     begin
       index += 1
       index = 0 if index >= @active_pane.controls.size
