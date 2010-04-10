@@ -32,7 +32,8 @@ Gem::Specification.new do |s|
      "lib/luck/listbox.rb",
      "lib/luck/pane.rb",
      "lib/luck/progressbar.rb",
-     "lib/luck/textbox.rb"
+     "lib/luck/textbox.rb",
+     "luck.gemspec"
   ]
   s.homepage = %q{http://github.com/danopia/luck}
   s.rdoc_options = ["--charset=UTF-8"]
