@@ -21,7 +21,11 @@ class Display
   end
   
   def pane name, *args, &blck
-    @panes[name] = Pane.new(self, *args, &blck)
+    if args.any? && args.first.is_a? Pane
+      @panes[name] = args.first
+    else
+      @panes[name] = Pane.new(self, *args, &blck)
+    end
   end
   
   def alert name, *args, &blck
