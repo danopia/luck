@@ -68,8 +68,10 @@ class TextBox < Label
     elsif char == :end
       @index = @text.size
     elsif char.is_a? String
-      @text.insert @index, char
-      @index += 1
+      if text.size < width
+        @text.insert @index, char
+        @index += 1
+      end
     end
     redraw
   end
