@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{luck}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Danopia"]
-  s.date = %q{2010-04-10}
+  s.date = %q{2010-05-17}
   s.description = %q{Pure-ruby CLI UI system. Includes multiple panes in a display and multiple controls in a pane. luck is lucky (as opposed to ncurses being cursed)}
   s.email = %q{me.github@danopia.net}
   s.extra_rdoc_files = [
