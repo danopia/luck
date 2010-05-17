@@ -91,7 +91,12 @@ class Display
   end
   
   def cycle_controls
-    index = @active_pane.controls.keys.index @active_pane.controls.key(@active_control)
+    if RUBY_VERSION.to_f > 1.8
+      index = @active_pane.controls.keys.index @active_pane.controls.key(@active_control)
+    else
+      index = @active_pane.controls.keys.index @active_pane.controls.index(@active_control)
+    end
+    
     begin
       index += 1
       index = 0 if index >= @active_pane.controls.size
@@ -103,7 +108,12 @@ class Display
   end
   
   def cycle_controls_back
-    index = @active_pane.controls.keys.index @active_pane.controls.key(@active_control)
+    if RUBY_VERSION.to_f > 1.8
+      index = @active_pane.controls.keys.index @active_pane.controls.key(@active_control)
+    else
+      index = @active_pane.controls.keys.index @active_pane.controls.index(@active_control)
+    end
+    
     begin
       index -= 1
       index = @active_pane.controls.size - 1 if index < 0
