@@ -14,6 +14,7 @@ class ProgressBar < Control
   end
   
   def percentage
+    return 0 if @maximum == 0
     @value.to_f / @maximum.to_f
   end
   
@@ -38,6 +39,7 @@ class DoubleProgressBar < ProgressBar
   end
   
   def percentage2
+    return 0 if @maximum2 == 0
     @value2.to_f / @maximum2.to_f
   end
   
